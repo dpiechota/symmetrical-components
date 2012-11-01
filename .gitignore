@@ -8,3 +8,5 @@
 .classpath
 .settings/
 target/
+logs/
+sine-cosine.png
