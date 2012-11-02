@@ -1,4 +1,4 @@
-package pl.edu.agh.weaiiib.elektrotechnika.symcom;
+package pl.edu.agh.weaiiib.symcom.logic;
 
 import java.awt.Color;
 
@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import org.apache.commons.math3.complex.Complex;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
@@ -27,14 +26,14 @@ public class VectorChart extends JFrame {
 	private Complex F2;
 	private Complex F3;
 
-	VectorSeriesCollection dataSet = new VectorSeriesCollection();
+	private VectorSeriesCollection dataSet = new VectorSeriesCollection();
 
-	VectorRenderer r = new VectorRenderer();
+	private VectorRenderer r = new VectorRenderer();
 
 	// r.setBasePaint(Color.white);
 	// r.setSeriesPaint(0, Color.blue);
 	// Create a Chart
-	JFreeChart chart;
+	private JFreeChart chart;
 
 	public VectorChart(Complex F1, Complex F2, Complex F3) {
 		DOMConfigurator.configure("log4j.xml");
@@ -81,7 +80,7 @@ public class VectorChart extends JFrame {
 		dataSet.addSeries(vectorSeriesF3);
 	}
 
-	public void printChart() {
+	public void prepareChart() {
 
 		updateDataSet();
 
@@ -94,16 +93,16 @@ public class VectorChart extends JFrame {
 
 		plot.setBackgroundPaint(Color.white);
 
-		chart = new JFreeChart(plot);
-		chart.setTitle("Fazory F1, F2, F3");
-		chart.setBackgroundPaint(Color.white);
+		setChart(new JFreeChart(plot));
+		getChart().setTitle("Fazory F1, F2, F3");
+		getChart().setBackgroundPaint(Color.white);
+	}
 
-		// create and display a frame...
-		this.getContentPane().add(new ChartPanel(chart));
-		this.setSize(700, 500);
-		this.setVisible(true);
-		this.setTitle("Fazory F1, F2, F3");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
+	public JFreeChart getChart() {
+		return chart;
+	}
+
+	public void setChart(JFreeChart chart) {
+		this.chart = chart;
 	}
 }

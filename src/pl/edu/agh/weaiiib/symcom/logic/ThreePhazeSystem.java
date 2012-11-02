@@ -1,4 +1,4 @@
-package pl.edu.agh.weaiiib.elektrotechnika.symcom;
+package pl.edu.agh.weaiiib.symcom.logic;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.log4j.Logger;

@@ -1,4 +1,4 @@
-package pl.edu.agh.weaiiib.elektrotechnika.symcom;
+package pl.edu.agh.weaiiib.symcom.logic;
 
 import java.io.IOException;
 
@@ -30,11 +30,11 @@ public class Main {
 
 		// Print time dimension chart
 		XYChart XYframe = new XYChart(F1, F2, F3);
-		XYframe.printChart();
+		XYframe.prepareChart();
 
 		// Print phasor chart
 		VectorChart vector = new VectorChart(F1, F2, F3);
-		vector.printChart();
+		vector.prepareChart();
 	}
 
 }

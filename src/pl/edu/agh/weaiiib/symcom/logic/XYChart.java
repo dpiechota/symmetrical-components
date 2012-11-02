@@ -1,4 +1,4 @@
-package pl.edu.agh.weaiiib.elektrotechnika.symcom;
+package pl.edu.agh.weaiiib.symcom.logic;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.sin;
@@ -6,23 +6,17 @@ import static org.math.array.DoubleArray.increment;
 
 import java.awt.Color;
 
-import javax.swing.JFrame;
-
 import org.apache.commons.math3.complex.Complex;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.DefaultXYDataset;
 
-public class XYChart extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5428701242107845411L;
+public class XYChart {
+	
 	private static final double FREQ = 50;
 	static final Logger logger = Logger.getLogger(XYChart.class);
 
@@ -33,10 +27,10 @@ public class XYChart extends JFrame {
 	private Complex F3;
 
 	// Date set for chart
-	DefaultXYDataset dataset = new DefaultXYDataset();
+	private DefaultXYDataset dataset = new DefaultXYDataset();
 
 	// Chart itself
-	JFreeChart chart;
+	private JFreeChart chart;
 
 	// Class Constructor
 	public XYChart(Complex F1, Complex F2, Complex F3) {
@@ -104,10 +98,10 @@ public class XYChart extends JFrame {
 		dataset.addSeries("F3", L3Values);
 	}
 
-	public void printChart() {
+	public void prepareChart() {
 		updateDataSet();
 		// Create the chart
-		chart = ChartFactory.createXYLineChart(
+		setChart(ChartFactory.createXYLineChart(
 				"Przebieg czasowy faz F1, F2, F3", // The chart title
 				"Czas [s]", // x axis label
 				"Amplituda", // y axis label
@@ -115,20 +109,22 @@ public class XYChart extends JFrame {
 				PlotOrientation.VERTICAL, true, // Is a legend required?
 				true, // Use tooltips
 				false // Configure chart to generate URLs?
-				);
+				));
 
-		chart.setBackgroundPaint(Color.white);
+		getChart().setBackgroundPaint(Color.white);
 
-		XYPlot plot = chart.getXYPlot();
+		XYPlot plot = getChart().getXYPlot();
 
 		plot.setBackgroundPaint(Color.white);
 		plot.setDomainGridlinePaint(Color.lightGray);
 		plot.setRangeGridlinePaint(Color.lightGray);
+	}
 
-		this.getContentPane().add(new ChartPanel(chart));
-		this.setSize(700, 500);
-		this.setTitle("Przebieg czasowy F1, F2, F3");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
+	public JFreeChart getChart() {
+		return chart;
+	}
+
+	public void setChart(JFreeChart chart) {
+		this.chart = chart;
 	}
 }
