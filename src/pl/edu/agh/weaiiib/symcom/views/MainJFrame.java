@@ -1,5 +1,6 @@
 package pl.edu.agh.weaiiib.symcom.views;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -25,7 +26,6 @@ import javax.swing.border.TitledBorder;
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.complex.ComplexUtils;
 import org.apache.commons.math3.util.FastMath;
-import org.jfree.chart.ChartPanel;
 
 import pl.edu.agh.weaiiib.symcom.logic.VectorChart;
 import pl.edu.agh.weaiiib.symcom.logic.XYChart;
@@ -157,16 +157,18 @@ public class MainJFrame extends JFrame {
 				Complex F3 = ComplexUtils.polar2Complex(Double.valueOf(magnitudeF3.getValue().toString()), FastMath.toRadians(Double.valueOf(angelF3.getValue().toString())));
 				
 				XYChart xychart = new XYChart(F1, F2, F3);
-				xychart.prepareChart();
-				
-				xychrtjframe.getContentPane().add(new ChartPanel(xychart.getChart()));
+				xychrtjframe.getContentPane().removeAll();
+				xychrtjframe.add(xychart.getChartPanel(), BorderLayout.CENTER);
+				xychrtjframe.getContentPane().revalidate();
+				xychrtjframe.repaint();
 				xychrtjframe.setVisible(true);
-
+				
 				// Print phasor chart
 				VectorChart vector = new VectorChart(F1, F2, F3);
-				vector.prepareChart();
-				
-				vectorchartjframe.getContentPane().add(new ChartPanel(vector.getChart()));
+				vectorchartjframe.getContentPane().removeAll();
+				vectorchartjframe.add(vector.getChartPanel(), BorderLayout.CENTER);
+				vectorchartjframe.getContentPane().revalidate();
+				vectorchartjframe.repaint();
 				vectorchartjframe.setVisible(true);
 				
 			}

@@ -8,6 +8,8 @@ import org.apache.commons.math3.util.FastMath;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
+import pl.edu.agh.weaiiib.symcom.views.VectorChartJFrame;
+
 public class Main {
 	static final Logger logger = Logger.getLogger(Main.class);
 	double x = FastMath.toDegrees(5.0);
@@ -30,11 +32,10 @@ public class Main {
 
 		// Print time dimension chart
 		XYChart XYframe = new XYChart(F1, F2, F3);
-		XYframe.prepareChart();
+		XYframe.createChart();
 
-		// Print phasor chart
-		VectorChart vector = new VectorChart(F1, F2, F3);
-		vector.prepareChart();
+		VectorChartJFrame frame = new VectorChartJFrame();
+		frame.setVisible(true);
 	}
 
 }

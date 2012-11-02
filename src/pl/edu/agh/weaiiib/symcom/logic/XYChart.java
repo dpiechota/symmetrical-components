@@ -10,27 +10,25 @@ import org.apache.commons.math3.complex.Complex;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.DefaultXYDataset;
 
 public class XYChart {
-	
-	private static final double FREQ = 50;
+
 	static final Logger logger = Logger.getLogger(XYChart.class);
 
+	private static final double FREQ = 50;
+	private static final String TITLE = "Przebieg czasowy faz F1, F2, F3";
 	private static final double[] LAxis = increment(0.0, 0.0001, 0.03);
 
 	private Complex F1;
 	private Complex F2;
 	private Complex F3;
 
-	// Date set for chart
-	private DefaultXYDataset dataset = new DefaultXYDataset();
-
-	// Chart itself
-	private JFreeChart chart;
+	private ChartPanel chartPanel;
 
 	// Class Constructor
 	public XYChart(Complex F1, Complex F2, Complex F3) {
@@ -39,6 +37,9 @@ public class XYChart {
 		setF1(F1);
 		setF2(F2);
 		setF3(F3);
+
+		setChartPanel(createChart());
+		getChartPanel().setMouseWheelEnabled(true);
 	}
 
 	public Complex getF1() {
@@ -65,7 +66,16 @@ public class XYChart {
 		F3 = f3;
 	}
 
-	public void updateDataSet() {
+	public ChartPanel getChartPanel() {
+		return chartPanel;
+	}
+
+	public void setChartPanel(ChartPanel chartPanel) {
+		this.chartPanel = chartPanel;
+	}
+
+	public DefaultXYDataset createDataset() {
+		DefaultXYDataset dataset = new DefaultXYDataset();
 
 		double[][] L1Values = new double[2][LAxis.length];
 		double[][] L2Values = new double[2][LAxis.length];
@@ -96,35 +106,30 @@ public class XYChart {
 		dataset.addSeries("F1", L1Values);
 		dataset.addSeries("F2", L2Values);
 		dataset.addSeries("F3", L3Values);
+		return dataset;
 	}
 
-	public void prepareChart() {
-		updateDataSet();
+	public ChartPanel createChart() {
+		DefaultXYDataset dataset = createDataset();
+
 		// Create the chart
-		setChart(ChartFactory.createXYLineChart(
-				"Przebieg czasowy faz F1, F2, F3", // The chart title
+		JFreeChart chart = ChartFactory.createXYLineChart(TITLE, // The chart
+																	// title
 				"Czas [s]", // x axis label
 				"Amplituda", // y axis label
 				dataset, // The dataset for the chart
 				PlotOrientation.VERTICAL, true, // Is a legend required?
-				true, // Use tooltips
+				false, // Use tooltips
 				false // Configure chart to generate URLs?
-				));
+				);
 
-		getChart().setBackgroundPaint(Color.white);
+		chart.setBackgroundPaint(Color.white);
 
-		XYPlot plot = getChart().getXYPlot();
+		XYPlot plot = chart.getXYPlot();
 
 		plot.setBackgroundPaint(Color.white);
 		plot.setDomainGridlinePaint(Color.lightGray);
 		plot.setRangeGridlinePaint(Color.lightGray);
-	}
-
-	public JFreeChart getChart() {
-		return chart;
-	}
-
-	public void setChart(JFreeChart chart) {
-		this.chart = chart;
+		return new ChartPanel(chart);
 	}
 }
