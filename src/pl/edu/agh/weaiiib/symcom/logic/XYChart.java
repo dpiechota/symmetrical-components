@@ -8,7 +8,6 @@ import java.awt.Color;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -24,46 +23,46 @@ public class XYChart {
 	private static final String TITLE = "Przebieg czasowy faz F1, F2, F3";
 	private static final double[] LAxis = increment(0.0, 0.0001, 0.03);
 
-	private Complex F1;
-	private Complex F2;
-	private Complex F3;
+	private Complex fA;
+	private Complex fB;
+	private Complex fC;
 
 	private ChartPanel chartPanel;
 
 	// Class Constructor
-	public XYChart(Complex F1, Complex F2, Complex F3) {
+	public XYChart(Complex fA, Complex fB, Complex fC) {
 
-		DOMConfigurator.configure("log4j.xml");
-		setF1(F1);
-		setF2(F2);
-		setF3(F3);
+		//DOMConfigurator.configure("log4j.xml");
+		setfA(fA);
+		setfB(fB);
+		setfC(fC);
 
 		setChartPanel(createChart());
 		getChartPanel().setMouseWheelEnabled(true);
 	}
 
 	public Complex getF1() {
-		return F1;
+		return fA;
 	}
 
-	public void setF1(Complex f1) {
-		F1 = f1;
+	public void setfA(Complex f1) {
+		fA = f1;
 	}
 
 	public Complex getF2() {
-		return F2;
+		return fB;
 	}
 
-	public void setF2(Complex f2) {
-		F2 = f2;
+	public void setfB(Complex f2) {
+		fB = f2;
 	}
 
 	public Complex getF3() {
-		return F3;
+		return fC;
 	}
 
-	public void setF3(Complex f3) {
-		F3 = f3;
+	public void setfC(Complex f3) {
+		fC = f3;
 	}
 
 	public ChartPanel getChartPanel() {
