@@ -30,6 +30,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
 import pl.edu.agh.weaiiib.symcom.logic.Main;
+import pl.edu.agh.weaiiib.symcom.logic.SymmetricalComponents;
 import pl.edu.agh.weaiiib.symcom.logic.VectorChart;
 import pl.edu.agh.weaiiib.symcom.logic.XYChart;
 
@@ -48,8 +49,13 @@ public class MainJFrame extends JFrame {
 	private JSpinner angelF2;
 	private JSpinner magnitudeF3;
 	private JSpinner angelF3;
-	private XYChartJFrame xychrtjframe;
-	private VectorChartJFrame vectorchartjframe;
+	
+	private XYChartJFrame timeProcess;
+	private VectorChartJFrame threePhaze;
+	private VectorChartJFrame zero_seq;
+	private VectorChartJFrame positiveSequence;
+	private VectorChartJFrame negativeSequence;
+	private VectorChartJFrame threePhazeCheck;
 
 	/**
 	 * Launch the application.
@@ -79,8 +85,12 @@ public class MainJFrame extends JFrame {
 	 */
 	public MainJFrame() {
 
-		xychrtjframe = new XYChartJFrame();
-		vectorchartjframe = new VectorChartJFrame("Fazory faz A, B, C", 100, 10);
+		timeProcess = new XYChartJFrame("Przebieg czasowy faz A, B, C", 100,0);
+		threePhaze = new VectorChartJFrame("Fazory faz A, B, C", 500, 0);
+		zero_seq = new VectorChartJFrame("Kolejnoœæ zerowa", 100, 400);
+		positiveSequence = new VectorChartJFrame("Kolejnoœæ zgodna", 500, 400);
+		negativeSequence = new VectorChartJFrame("Kolejnoœæ przeciwna", 900, 400);
+		threePhazeCheck = new VectorChartJFrame("Sprawdzenie", 900, 0);
 
 		setIconImage(Toolkit
 				.getDefaultToolkit()
@@ -89,7 +99,7 @@ public class MainJFrame extends JFrame {
 								.getResource("/pl/edu/agh/weaiiib/symcom/resources/lightning-icon.png")));
 		setTitle("Sk\u0142adowe Symetryczne - Dariusz Piechota");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 641, 514);
+		setBounds(100, 100, 590, 514);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -127,11 +137,11 @@ public class MainJFrame extends JFrame {
 		JLabel label_2 = new JLabel("Faza (stopnie)");
 
 		magnitudeF2 = new JSpinner();
-		magnitudeF2.setModel(new SpinnerNumberModel(new Double(230),
+		magnitudeF2.setModel(new SpinnerNumberModel(new Double(50),
 				new Double(0), null, new Double(1)));
 
 		angelF2 = new JSpinner();
-		angelF2.setModel(new SpinnerNumberModel(new Double(120), null, null,
+		angelF2.setModel(new SpinnerNumberModel(new Double(90), null, null,
 				new Double(1)));
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2
@@ -210,34 +220,21 @@ public class MainJFrame extends JFrame {
 
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Klik");
-				Complex F1 = ComplexUtils.polar2Complex(Double
+				
+				Complex FA = ComplexUtils.polar2Complex(Double
 						.valueOf(magnitudeF1.getValue().toString()), FastMath
 						.toRadians(Double
 								.valueOf(angelF1.getValue().toString())));
-				Complex F2 = ComplexUtils.polar2Complex(Double
+				Complex FB = ComplexUtils.polar2Complex(Double
 						.valueOf(magnitudeF2.getValue().toString()), FastMath
 						.toRadians(Double
 								.valueOf(angelF2.getValue().toString())));
-				Complex F3 = ComplexUtils.polar2Complex(Double
+				Complex FC = ComplexUtils.polar2Complex(Double
 						.valueOf(magnitudeF3.getValue().toString()), FastMath
 						.toRadians(Double
 								.valueOf(angelF3.getValue().toString())));
-
-				XYChart xychart = new XYChart(F1, F2, F3);
-				xychrtjframe.getContentPane().removeAll();
-				xychrtjframe.add(xychart.getChartPanel(), BorderLayout.CENTER);
-				xychrtjframe.getContentPane().revalidate();
-				xychrtjframe.repaint();
-				xychrtjframe.setVisible(true);
-
-				// Print phasor chart
-				VectorChart vector = new VectorChart(F1, F2, F3);
-				vectorchartjframe.getContentPane().removeAll();
-				vectorchartjframe.add(vector.getChartPanel(),
-						BorderLayout.CENTER);
-				vectorchartjframe.getContentPane().revalidate();
-				vectorchartjframe.repaint();
-				vectorchartjframe.setVisible(true);
+				
+				doPrintButton(FA, FB, FC);
 
 			}
 
@@ -308,7 +305,7 @@ public class MainJFrame extends JFrame {
 		JLabel label_3 = new JLabel("Faza (stopnie)");
 
 		magnitudeF3 = new JSpinner();
-		magnitudeF3.setModel(new SpinnerNumberModel(new Double(230),
+		magnitudeF3.setModel(new SpinnerNumberModel(new Double(100),
 				new Double(0), null, new Double(1)));
 
 		angelF3 = new JSpinner();
@@ -381,7 +378,7 @@ public class MainJFrame extends JFrame {
 		JLabel lblFazastopnie = new JLabel("Faza (stopnie)");
 
 		magnitudeF1 = new JSpinner();
-		magnitudeF1.setModel(new SpinnerNumberModel(new Double(230),
+		magnitudeF1.setModel(new SpinnerNumberModel(new Double(100),
 				new Double(0), null, new Double(1)));
 
 		angelF1 = new JSpinner();
@@ -443,5 +440,69 @@ public class MainJFrame extends JFrame {
 										.addContainerGap(67, Short.MAX_VALUE)));
 		panel_1.setLayout(gl_panel_1);
 		contentPane.setLayout(gl_contentPane);
+	}
+	
+	private void doPrintButton(Complex fA, Complex fB, Complex fC){
+		/*
+		 * Print time-functions of phases
+		 */
+		XYChart xychart = new XYChart(fA, fB, fC);
+		refreshJFrame(timeProcess, xychart);
+
+		/*
+		 * Print original 3-phase system
+		 */
+		VectorChart vector = new VectorChart(fA, fC, fB);
+		refreshJFrame(threePhaze, vector);
+		
+		/*
+		 * Compute symmetrical components
+		 */
+		SymmetricalComponents symcom = new SymmetricalComponents(fA, fB, fC);
+
+		/*
+		 * Print zero sequence phasers
+		 */
+		VectorChart vectorABC_0 = new VectorChart(symcom.getfA_0(), symcom.getfB_0(), symcom.getfC_0());
+		refreshJFrame(zero_seq, vectorABC_0);
+
+		/*
+		 * Print positive sequence phasers
+		 */
+		VectorChart vectorABC_1 = new VectorChart(symcom.getfA_1(), symcom.getfB_1(), symcom.getfC_1());
+		refreshJFrame(positiveSequence, vectorABC_1);
+
+		/*
+		 * Print negative sequence phasers
+		 */
+		VectorChart vectorABC_2 = new VectorChart(symcom.getfA_2(), symcom.getfB_2(), symcom.getfC_2());
+		refreshJFrame(negativeSequence, vectorABC_2);
+
+		/*
+		 * Print check phasers
+		 */
+		VectorChart vectorABC_check = new VectorChart(
+				((symcom.getfA_0().add(symcom.getfA_1())).add(symcom.getfA_2())),
+				((symcom.getfC_0().add(symcom.getfC_1())).add(symcom.getfC_2())),
+				((symcom.getfB_0().add(symcom.getfB_1())).add(symcom.getfB_2())));
+		refreshJFrame(threePhazeCheck, vectorABC_check);
+	}
+	
+	private void refreshJFrame(JFrame frame, VectorChart chart){
+		
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(chart.getChartPanel(), BorderLayout.CENTER);
+		frame.getContentPane().revalidate();
+		frame.repaint();
+		frame.setVisible(true);
+	}
+	
+	private void refreshJFrame(JFrame frame, XYChart chart){
+		
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(chart.getChartPanel(), BorderLayout.CENTER);
+		frame.getContentPane().revalidate();
+		frame.repaint();
+		frame.setVisible(true);
 	}
 }

@@ -7,6 +7,7 @@ import static org.math.array.DoubleArray.increment;
 import java.awt.Color;
 
 import org.apache.commons.math3.complex.Complex;
+import org.apache.commons.math3.util.FastMath;
 import org.apache.log4j.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -102,9 +103,9 @@ public class XYChart {
 					+ L3Values[1][i]);
 		}
 
-		dataset.addSeries("F1", L1Values);
-		dataset.addSeries("F2", L2Values);
-		dataset.addSeries("F3", L3Values);
+		dataset.addSeries("Faza A. Modu³ = " + String.format("%.2f",getF1().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getF1().getArgument())), L1Values);
+		dataset.addSeries("Faza B. Modu³ = " + String.format("%.2f",getF2().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getF2().getArgument())), L2Values);
+		dataset.addSeries("Faza C. Modu³ = " + String.format("%.2f",getF3().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getF3().getArgument())), L3Values);
 		return dataset;
 	}
 
