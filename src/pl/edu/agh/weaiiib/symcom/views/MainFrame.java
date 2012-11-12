@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -34,7 +35,7 @@ import pl.edu.agh.weaiiib.symcom.logic.SymmetricalComponents;
 import pl.edu.agh.weaiiib.symcom.logic.VectorChart;
 import pl.edu.agh.weaiiib.symcom.logic.XYChart;
 
-public class MainJFrame extends JFrame {
+public class MainFrame extends JFrame {
 
 	/**
 	 * 
@@ -49,13 +50,13 @@ public class MainJFrame extends JFrame {
 	private JSpinner angelF2;
 	private JSpinner magnitudeF3;
 	private JSpinner angelF3;
-	
-	private XYChartJFrame timeProcess;
-	private VectorChartJFrame threePhaze;
-	private VectorChartJFrame zero_seq;
-	private VectorChartJFrame positiveSequence;
-	private VectorChartJFrame negativeSequence;
-	private VectorChartJFrame threePhazeCheck;
+
+	private ChartFrame timeProcess;
+	private ChartFrame threePhaze;
+	private ChartFrame zero_seq;
+	private ChartFrame positiveSequence;
+	private ChartFrame negativeSequence;
+	private ChartFrame threePhazeCheck;
 
 	/**
 	 * Launch the application.
@@ -71,7 +72,8 @@ public class MainJFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainJFrame frame = new MainJFrame();
+					MainFrame frame = new MainFrame();
+					frame.setLocation(1200, 500);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -83,20 +85,15 @@ public class MainJFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainJFrame() {
+	public MainFrame() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/pl/edu/agh/weaiiib/symcom/resources/lightning-icon.png")));
 
-		timeProcess = new XYChartJFrame("Przebieg czasowy faz A, B, C", 100,0);
-		threePhaze = new VectorChartJFrame("Fazory faz A, B, C", 500, 0);
-		zero_seq = new VectorChartJFrame("Kolejnoœæ zerowa", 100, 400);
-		positiveSequence = new VectorChartJFrame("Kolejnoœæ zgodna", 500, 400);
-		negativeSequence = new VectorChartJFrame("Kolejnoœæ przeciwna", 900, 400);
-		threePhazeCheck = new VectorChartJFrame("Sprawdzenie", 900, 0);
-
-		setIconImage(Toolkit
-				.getDefaultToolkit()
-				.getImage(
-						MainJFrame.class
-								.getResource("/pl/edu/agh/weaiiib/symcom/resources/lightning-icon.png")));
+		timeProcess = new ChartFrame("Przebieg czasowy faz A, B, C", 100, 0);
+		threePhaze = new ChartFrame("Fazory faz A, B, C", 500, 0);
+		zero_seq = new ChartFrame("Kolejnoœæ zerowa", 100, 400);
+		positiveSequence = new ChartFrame("Kolejnoœæ zgodna", 500, 400);
+		negativeSequence = new ChartFrame("Kolejnoœæ przeciwna", 900, 400);
+		threePhazeCheck = new ChartFrame("Sprawdzenie", 900, 0);
 		setTitle("Sk\u0142adowe Symetryczne - Dariusz Piechota");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 590, 514);
@@ -108,37 +105,44 @@ public class MainJFrame extends JFrame {
 		menuBar.add(mnPlik);
 
 		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.setIcon(new ImageIcon(MainFrame.class.getResource("/pl/edu/agh/weaiiib/symcom/resources/lightning-icon.png")));
+		mntmExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
 		mnPlik.add(mntmExit);
 
 		JMenu mnAbout = new JMenu("About");
 		menuBar.add(mnAbout);
 
 		JMenuItem mntmAboutThisProgram = new JMenuItem("About this program");
-		mntmAboutThisProgram
-				.setIcon(new ImageIcon(
-						MainJFrame.class
-								.getResource("/pl/edu/agh/weaiiib/symcom/resources/lightning-icon.png")));
+		mntmAboutThisProgram.setIcon(new ImageIcon(MainFrame.class.getResource("/pl/edu/agh/weaiiib/symcom/resources/lightning-icon.png")));
+		mntmAboutThisProgram.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane
+						.showMessageDialog(contentPane,
+								"Dariusz Piechota. Praca magisterska: Metoda sk³adowych symetrycznych");
+			}
+		});
 		mnAbout.add(mntmAboutThisProgram);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Faza F1", TitledBorder.LEFT,
-				TitledBorder.TOP, null, null));
+		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Faza fA", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(UIManager
-				.getBorder("TitledBorder.border"), "Faza F2",
-				TitledBorder.LEFT, TitledBorder.TOP, null, null));
+		panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Faza fB", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 
 		JLabel label = new JLabel("Amplituda");
 
 		JLabel label_2 = new JLabel("Faza (stopnie)");
 
 		magnitudeF2 = new JSpinner();
-		magnitudeF2.setModel(new SpinnerNumberModel(new Double(50),
-				new Double(0), null, new Double(1)));
+		magnitudeF2.setModel(new SpinnerNumberModel(new Double(50), new Double(
+				0), null, new Double(1)));
 
 		angelF2 = new JSpinner();
 		angelF2.setModel(new SpinnerNumberModel(new Double(90), null, null,
@@ -211,31 +215,13 @@ public class MainJFrame extends JFrame {
 		panel_2.setLayout(gl_panel_2);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new TitledBorder(UIManager
-				.getBorder("TitledBorder.border"), "Faza F3",
-				TitledBorder.LEFT, TitledBorder.TOP, null, null));
+		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Faza fC", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 
 		JButton btnRysuj = new JButton("Rysuj");
 		btnRysuj.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Klik");
-				
-				Complex FA = ComplexUtils.polar2Complex(Double
-						.valueOf(magnitudeF1.getValue().toString()), FastMath
-						.toRadians(Double
-								.valueOf(angelF1.getValue().toString())));
-				Complex FB = ComplexUtils.polar2Complex(Double
-						.valueOf(magnitudeF2.getValue().toString()), FastMath
-						.toRadians(Double
-								.valueOf(angelF2.getValue().toString())));
-				Complex FC = ComplexUtils.polar2Complex(Double
-						.valueOf(magnitudeF3.getValue().toString()), FastMath
-						.toRadians(Double
-								.valueOf(angelF3.getValue().toString())));
-				
-				doPrintButton(FA, FB, FC);
-
+				updatePhaseValues();
 			}
 
 		});
@@ -441,8 +427,8 @@ public class MainJFrame extends JFrame {
 		panel_1.setLayout(gl_panel_1);
 		contentPane.setLayout(gl_contentPane);
 	}
-	
-	private void doPrintButton(Complex fA, Complex fB, Complex fC){
+
+	private void doPrintButton(Complex fA, Complex fB, Complex fC) {
 		/*
 		 * Print time-functions of phases
 		 */
@@ -452,9 +438,9 @@ public class MainJFrame extends JFrame {
 		/*
 		 * Print original 3-phase system
 		 */
-		VectorChart vector = new VectorChart(fA, fC, fB);
+		VectorChart vector = new VectorChart(fA, fB, fC);
 		refreshJFrame(threePhaze, vector);
-		
+
 		/*
 		 * Compute symmetrical components
 		 */
@@ -483,26 +469,34 @@ public class MainJFrame extends JFrame {
 		 */
 		VectorChart vectorABC_check = new VectorChart(
 				((symcom.getfA_0().add(symcom.getfA_1())).add(symcom.getfA_2())),
-				((symcom.getfC_0().add(symcom.getfC_1())).add(symcom.getfC_2())),
-				((symcom.getfB_0().add(symcom.getfB_1())).add(symcom.getfB_2())));
+				((symcom.getfC_0().add(symcom.getfB_1())).add(symcom.getfB_2())),
+				((symcom.getfB_0().add(symcom.getfC_1())).add(symcom.getfC_2())));
 		refreshJFrame(threePhazeCheck, vectorABC_check);
 	}
-	
-	private void refreshJFrame(JFrame frame, VectorChart chart){
-		
+
+	private void refreshJFrame(JFrame frame, VectorChart chart) {
+
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(chart.getChartPanel(), BorderLayout.CENTER);
 		frame.getContentPane().revalidate();
 		frame.repaint();
 		frame.setVisible(true);
 	}
-	
-	private void refreshJFrame(JFrame frame, XYChart chart){
-		
-		frame.getContentPane().removeAll();
-		frame.getContentPane().add(chart.getChartPanel(), BorderLayout.CENTER);
-		frame.getContentPane().revalidate();
-		frame.repaint();
-		frame.setVisible(true);
+
+	private void updatePhaseValues() {
+		System.out.println("Klik");
+
+		Complex FA = ComplexUtils.polar2Complex(Double.valueOf(magnitudeF1
+				.getValue().toString()), FastMath.toRadians(Double
+				.valueOf(angelF1.getValue().toString())));
+		Complex FB = ComplexUtils.polar2Complex(Double.valueOf(magnitudeF2
+				.getValue().toString()), FastMath.toRadians(Double
+				.valueOf(angelF2.getValue().toString())));
+		Complex FC = ComplexUtils.polar2Complex(Double.valueOf(magnitudeF3
+				.getValue().toString()), FastMath.toRadians(Double
+				.valueOf(angelF3.getValue().toString())));
+
+		doPrintButton(FA, FB, FC);
 	}
+
 }

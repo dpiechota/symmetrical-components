@@ -2,13 +2,11 @@ package pl.edu.agh.weaiiib.symcom.logic;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.sin;
-import static org.math.array.DoubleArray.increment;
 
 import java.awt.Color;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.util.FastMath;
-import org.apache.log4j.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -16,65 +14,16 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.DefaultXYDataset;
 
-public class XYChart {
+public class XYChart extends VectorChart{
 
-	static final Logger logger = Logger.getLogger(XYChart.class);
+	public XYChart(Complex fA, Complex fB, Complex fC) {
+		super(fA, fB, fC);
+	}
 
 	private static final double FREQ = 50;
-	private static final String TITLE = "Przebieg czasowy faz F1, F2, F3";
 	private static final double[] LAxis = increment(0.0, 0.0001, 0.03);
 
-	private Complex fA;
-	private Complex fB;
-	private Complex fC;
-
-	private ChartPanel chartPanel;
-
-	// Class Constructor
-	public XYChart(Complex fA, Complex fB, Complex fC) {
-
-		//DOMConfigurator.configure("log4j.xml");
-		setfA(fA);
-		setfB(fB);
-		setfC(fC);
-
-		setChartPanel(createChart());
-		getChartPanel().setMouseWheelEnabled(true);
-	}
-
-	public Complex getF1() {
-		return fA;
-	}
-
-	public void setfA(Complex f1) {
-		fA = f1;
-	}
-
-	public Complex getF2() {
-		return fB;
-	}
-
-	public void setfB(Complex f2) {
-		fB = f2;
-	}
-
-	public Complex getF3() {
-		return fC;
-	}
-
-	public void setfC(Complex f3) {
-		fC = f3;
-	}
-
-	public ChartPanel getChartPanel() {
-		return chartPanel;
-	}
-
-	public void setChartPanel(ChartPanel chartPanel) {
-		this.chartPanel = chartPanel;
-	}
-
-	public DefaultXYDataset createDataset() {
+	public DefaultXYDataset createXYDataset() {
 		DefaultXYDataset dataset = new DefaultXYDataset();
 
 		double[][] L1Values = new double[2][LAxis.length];
@@ -85,15 +34,15 @@ public class XYChart {
 
 		for (int i = 0; i < LAxis.length; i++) {
 
-			L1Values[1][i] = getF1().abs()
+			L1Values[1][i] = getfA().abs()
 					* sin(L1Values[0][i] * 2 * PI * FREQ
-							+ getF1().getArgument());
-			L2Values[1][i] = getF2().abs()
+							+ getfA().getArgument());
+			L2Values[1][i] = getfB().abs()
 					* sin(L1Values[0][i] * 2 * PI * FREQ
-							+ getF2().getArgument());
-			L3Values[1][i] = getF3().abs()
+							+ getfB().getArgument());
+			L3Values[1][i] = getfC().abs()
 					* sin(L1Values[0][i] * 2 * PI * FREQ
-							+ getF3().getArgument());
+							+ getfC().getArgument());
 
 			logger.debug("XY Data Set F1" + L1Values[0][i] + " "
 					+ L1Values[1][i]);
@@ -103,14 +52,22 @@ public class XYChart {
 					+ L3Values[1][i]);
 		}
 
-		dataset.addSeries("Faza A. Modu³ = " + String.format("%.2f",getF1().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getF1().getArgument())), L1Values);
-		dataset.addSeries("Faza B. Modu³ = " + String.format("%.2f",getF2().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getF2().getArgument())), L2Values);
-		dataset.addSeries("Faza C. Modu³ = " + String.format("%.2f",getF3().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getF3().getArgument())), L3Values);
+		dataset.addSeries("Faza A. Modu³ = " + String.format("%.2f",getfA().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfA().getArgument())), L1Values);
+		dataset.addSeries("Faza B. Modu³ = " + String.format("%.2f",getfB().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfB().getArgument())), L2Values);
+		dataset.addSeries("Faza C. Modu³ = " + String.format("%.2f",getfC().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfC().getArgument())), L3Values);
 		return dataset;
 	}
-
+	
+	public static double[] increment(double begin, double pitch, double end) {
+		double[] array = new double[(int) ((end - begin) / pitch)];
+		for (int i = 0; i < array.length; i++) {
+			array[i] = begin + i * pitch;
+		}
+		return array;
+	}
+	
 	public ChartPanel createChart() {
-		DefaultXYDataset dataset = createDataset();
+		DefaultXYDataset dataset = createXYDataset();
 
 		// Create the chart
 		JFreeChart chart = ChartFactory.createXYLineChart(TITLE, // The chart

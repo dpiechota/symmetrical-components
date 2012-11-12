@@ -12,11 +12,11 @@
 
 
 	<appender name="mosFile" class="org.apache.log4j.RollingFileAppender">
-		<param name="file" value="logs/junit.log" />
+		<param name="file" value="logs/application.log" />
 		<param name="append" value="false" />
 		<param name="MaxBackupIndex" value="1" />
 		<param name="MaxFileSize" value="10MB" />
-		<param name="Threshold" value="DEBUG" />
+		<param name="Threshold" value="info" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{YYYY-MM-dd HH:mm:ss} [%t] %-5p %c %x - %m%n" />
 		</layout>

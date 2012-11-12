@@ -20,14 +20,11 @@ public class VectorChart {
 
 	static final Logger logger = Logger.getLogger(VectorChart.class);
 
-	private static final String TITLE = "Fazory faz A, B, C";
+	protected final static String TITLE = "Fazory faz A, B, C";
 
 	private Complex fA;
 	private Complex fB;
 	private Complex fC;
-
-	private int x = 0;
-	private int y = 0;
 
 	private ChartPanel chartPanel;
 
@@ -41,7 +38,7 @@ public class VectorChart {
 		getChartPanel().setMouseWheelEnabled(true);
 	}
 	
-	public Complex getF1() {
+	public Complex getfA() {
 		return fA;
 	}
 
@@ -49,7 +46,7 @@ public class VectorChart {
 		fA = f1;
 	}
 
-	public Complex getF2() {
+	public Complex getfB() {
 		return fB;
 	}
 
@@ -57,7 +54,7 @@ public class VectorChart {
 		fB = f2;
 	}
 
-	public Complex getF3() {
+	public Complex getfC() {
 		return fC;
 	}
 
@@ -77,13 +74,13 @@ public class VectorChart {
 
 		VectorSeriesCollection dataSet = new VectorSeriesCollection();
 
-		VectorSeries vectorSeriesF1 = new VectorSeries("Faza A. Modu³ = " + String.format("%.2f",getF1().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getF1().getArgument())));
-		VectorSeries vectorSeriesF2 = new VectorSeries("Faza B. Modu³ = " + String.format("%.2f",getF2().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getF2().getArgument())));
-		VectorSeries vectorSeriesF3 = new VectorSeries("Faza C. Modu³ = " + String.format("%.2f",getF3().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getF3().getArgument())));
+		VectorSeries vectorSeriesF1 = new VectorSeries("Faza A. Modu³ = " + String.format("%.2f",getfA().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfA().getArgument())));
+		VectorSeries vectorSeriesF2 = new VectorSeries("Faza B. Modu³ = " + String.format("%.2f",getfB().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfB().getArgument())));
+		VectorSeries vectorSeriesF3 = new VectorSeries("Faza C. Modu³ = " + String.format("%.2f",getfC().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfC().getArgument())));
 
-		vectorSeriesF1.add(0, 0, getF1().getReal(), getF1().getImaginary());
-		vectorSeriesF2.add(-getX(), getY(), getF2().getReal(), getF2().getImaginary());
-		vectorSeriesF3.add(getX(), -getY(), getF3().getReal(), getF3().getImaginary());
+		vectorSeriesF1.add(0, 0, getfA().getReal(), getfA().getImaginary());
+		vectorSeriesF2.add(0, 0, getfB().getReal(), getfB().getImaginary());
+		vectorSeriesF3.add(0, 0, getfC().getReal(), getfC().getImaginary());
 
 		dataSet.addSeries(vectorSeriesF1);
 		dataSet.addSeries(vectorSeriesF2);
@@ -112,21 +109,5 @@ public class VectorChart {
 		//legendText.setPosition(RectangleEdge.BOTTOM);
 		//chart.addSubtitle(legendText);
 		return new ChartPanel(chart);
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
 	}
 }

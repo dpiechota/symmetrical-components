@@ -23,7 +23,7 @@ public class SymmetricalComponents {
 	private Complex fC_2;
 
 	private FieldMatrix<Complex> symmetricalCompMatrix;
-	private FieldMatrix<Complex> threePhazeMatrix;
+	//private FieldMatrix<Complex> threePhazeMatrix;
 
 	public SymmetricalComponents(Complex fA, Complex fB, Complex fC) {
 
@@ -44,7 +44,7 @@ public class SymmetricalComponents {
 		 * The S Matrix of symmetrical components transformation.
 		 * threePhazeMatrix = S * symmetricalCompMatrix
 		 */
-		FieldMatrix<Complex> SM = SymmetricalTransformation.SM;
+		//FieldMatrix<Complex> SM = SymmetricalTransformation.SM;
 		
 		/*
 		 * The S^-1 Matrix of of symmetrical components transformation.
@@ -71,12 +71,12 @@ public class SymmetricalComponents {
 		/*
 		 * Compute original 3 phase matrix threePhazeMatrix = S * SymmetricalCompMatrix
 		 */
-		setThreePhazeMatrix(SM.multiply(getSymmetricalCompMatrix()));
-		logger.info("Three Phaze Matrix " + getThreePhazeMatrix());
+		//setThreePhazeMatrix(SM.multiply(getSymmetricalCompMatrix()));
+		//logger.info("Three Phaze Matrix " + getThreePhazeMatrix());
 
-		setfA_0(symmetricalCompMatrix.getRow(0)[0]);
-		setfA_1(symmetricalCompMatrix.getRow(1)[0]);
-		setfA_2(symmetricalCompMatrix.getRow(2)[0]);
+		setfA_0(getSymmetricalCompMatrix().getRow(0)[0]);
+		setfA_1(getSymmetricalCompMatrix().getRow(1)[0]);
+		setfA_2(getSymmetricalCompMatrix().getRow(2)[0]);
 
 		setfB_0(getfA_0());
 		setfB_1(getfA_1().multiply(a2));
@@ -189,12 +189,14 @@ public class SymmetricalComponents {
 			FieldMatrix<Complex> symmetricalCompMatrix) {
 		this.symmetricalCompMatrix = symmetricalCompMatrix;
 	}
-
+	
+	/*
 	public FieldMatrix<Complex> getThreePhazeMatrix() {
 		return threePhazeMatrix;
 	}
-
+	
 	public void setThreePhazeMatrix(FieldMatrix<Complex> threePhazeMatrix) {
 		this.threePhazeMatrix = threePhazeMatrix;
 	}
+	*/
 }
