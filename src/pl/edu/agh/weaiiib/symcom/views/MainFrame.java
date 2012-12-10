@@ -90,11 +90,11 @@ public class MainFrame extends JFrame {
 
 		timeProcess = new ChartFrame("Przebieg czasowy faz A, B, C", 100, 0);
 		threePhaze = new ChartFrame("Fazory faz A, B, C", 500, 0);
-		zero_seq = new ChartFrame("Kolejnoœæ zerowa", 100, 400);
-		positiveSequence = new ChartFrame("Kolejnoœæ zgodna", 500, 400);
-		negativeSequence = new ChartFrame("Kolejnoœæ przeciwna", 900, 400);
+		zero_seq = new ChartFrame("Kolejnosc zerowa", 100, 400);
+		positiveSequence = new ChartFrame("Kolejnosc zgodna", 500, 400);
+		negativeSequence = new ChartFrame("Kolejnosc przeciwna", 900, 400);
 		threePhazeCheck = new ChartFrame("Sprawdzenie", 900, 0);
-		setTitle("Sk\u0142adowe Symetryczne - Dariusz Piechota");
+		setTitle("Skladowe Symetryczne - Dariusz Piechota");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 590, 514);
 
@@ -469,8 +469,8 @@ public class MainFrame extends JFrame {
 		 */
 		VectorChart vectorABC_check = new VectorChart(
 				((symcom.getfA_0().add(symcom.getfA_1())).add(symcom.getfA_2())),
-				((symcom.getfC_0().add(symcom.getfB_1())).add(symcom.getfB_2())),
-				((symcom.getfB_0().add(symcom.getfC_1())).add(symcom.getfC_2())));
+				((symcom.getfB_0().add(symcom.getfB_1())).add(symcom.getfB_2())),
+				((symcom.getfC_0().add(symcom.getfC_1())).add(symcom.getfC_2())));
 		refreshJFrame(threePhazeCheck, vectorABC_check);
 	}
 
@@ -478,13 +478,13 @@ public class MainFrame extends JFrame {
 
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(chart.getChartPanel(), BorderLayout.CENTER);
-		frame.getContentPane().revalidate();
+		frame.revalidate();
 		frame.repaint();
 		frame.setVisible(true);
 	}
 
 	private void updatePhaseValues() {
-		System.out.println("Klik");
+		logger.debug("Button Click event");
 
 		Complex FA = ComplexUtils.polar2Complex(Double.valueOf(magnitudeF1
 				.getValue().toString()), FastMath.toRadians(Double
@@ -495,7 +495,9 @@ public class MainFrame extends JFrame {
 		Complex FC = ComplexUtils.polar2Complex(Double.valueOf(magnitudeF3
 				.getValue().toString()), FastMath.toRadians(Double
 				.valueOf(angelF3.getValue().toString())));
-
+		
+		logger.info("\nPhase values: \nfA = " + FA + "\nfB = " + FB + "\nfC = " + FC);
+		
 		doPrintButton(FA, FB, FC);
 	}
 

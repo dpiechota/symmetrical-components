@@ -52,9 +52,9 @@ public class XYChart extends VectorChart{
 					+ L3Values[1][i]);
 		}
 
-		dataset.addSeries("Faza A. Modu³ = " + String.format("%.2f",getfA().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfA().getArgument())), L1Values);
-		dataset.addSeries("Faza B. Modu³ = " + String.format("%.2f",getfB().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfB().getArgument())), L2Values);
-		dataset.addSeries("Faza C. Modu³ = " + String.format("%.2f",getfC().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfC().getArgument())), L3Values);
+		dataset.addSeries("Faza A. Modul = " + String.format("%.2f",getfA().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfA().getArgument())), L1Values);
+		dataset.addSeries("Faza B. Modul = " + String.format("%.2f",getfB().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfB().getArgument())), L2Values);
+		dataset.addSeries("Faza C. Modul = " + String.format("%.2f",getfC().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfC().getArgument())), L3Values);
 		return dataset;
 	}
 	

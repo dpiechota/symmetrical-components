@@ -1,12 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<properties>
+		<project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
+	</properties>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>symmetrical-components</groupId>
+	<groupId>pl.edu.agh.weaiiib.symcom</groupId>
 	<artifactId>symmetrical-components</artifactId>
 	<version>1.0</version>
-	<packaging>jar</packaging>
-	<name>symmetrical-components</name>
+	<!-- <packaging>jar</packaging> -->
+	<name>${project.artifactId}</name>
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<defaultGoal>install</defaultGoal>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -32,6 +36,7 @@
 							<mainClass>pl.edu.agh.weaiiib.symcom.views.MainFrame</mainClass>
 						</manifest>
 					</archive>
+					<finalName>${project.artifactId}</finalName>
 				</configuration>
 				<executions>
 					<execution>

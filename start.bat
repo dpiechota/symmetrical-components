@@ -1,1 +1,1 @@
-java -jar symmetrical-components-1.0-jar-with-dependencies.jar
+java -jar symmetrical-components-jar-with-dependencies.jar

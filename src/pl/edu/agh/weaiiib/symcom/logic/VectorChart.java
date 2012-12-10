@@ -74,9 +74,9 @@ public class VectorChart {
 
 		VectorSeriesCollection dataSet = new VectorSeriesCollection();
 
-		VectorSeries vectorSeriesF1 = new VectorSeries("Faza A. Modu³ = " + String.format("%.2f",getfA().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfA().getArgument())));
-		VectorSeries vectorSeriesF2 = new VectorSeries("Faza B. Modu³ = " + String.format("%.2f",getfB().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfB().getArgument())));
-		VectorSeries vectorSeriesF3 = new VectorSeries("Faza C. Modu³ = " + String.format("%.2f",getfC().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfC().getArgument())));
+		VectorSeries vectorSeriesF1 = new VectorSeries("Faza A. Modul = " + String.format("%.2f",getfA().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfA().getArgument())));
+		VectorSeries vectorSeriesF2 = new VectorSeries("Faza B. Modul = " + String.format("%.2f",getfB().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfB().getArgument())));
+		VectorSeries vectorSeriesF3 = new VectorSeries("Faza C. Modul = " + String.format("%.2f",getfC().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfC().getArgument())));
 
 		vectorSeriesF1.add(0, 0, getfA().getReal(), getfA().getImaginary());
 		vectorSeriesF2.add(0, 0, getfB().getReal(), getfB().getImaginary());

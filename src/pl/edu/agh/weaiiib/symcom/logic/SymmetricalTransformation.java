@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class SymmetricalTransformation {
 	static final Logger logger = Logger.getLogger(SymmetricalTransformation.class);
 	
-	private static Complex  factor = new Complex(0.333, 0);
+	private static Complex  factor = new Complex(0.333333, 0);
 	
 	/*
 	 * a = -0.5 + j120
