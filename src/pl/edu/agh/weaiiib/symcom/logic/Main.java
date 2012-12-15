@@ -9,6 +9,7 @@ import org.apache.commons.math3.util.FastMath;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
+import pl.edu.agh.weaiiib.symcom.plots.VectorChart;
 import pl.edu.agh.weaiiib.symcom.views.ChartFrame;
 
 public class Main {

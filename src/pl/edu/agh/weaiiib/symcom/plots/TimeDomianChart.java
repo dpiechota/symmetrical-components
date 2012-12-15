@@ -1,4 +1,4 @@
-package pl.edu.agh.weaiiib.symcom.logic;
+package pl.edu.agh.weaiiib.symcom.plots;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.sin;
@@ -14,9 +14,9 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.DefaultXYDataset;
 
-public class XYChart extends VectorChart{
+public class TimeDomianChart extends VectorChart {
 
-	public XYChart(Complex fA, Complex fB, Complex fC) {
+	public TimeDomianChart(Complex fA, Complex fB, Complex fC) {
 		super(fA, fB, fC);
 	}
 
@@ -52,12 +52,30 @@ public class XYChart extends VectorChart{
 					+ L3Values[1][i]);
 		}
 
-		dataset.addSeries("Faza A. Modul = " + String.format("%.2f",getfA().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfA().getArgument())), L1Values);
-		dataset.addSeries("Faza B. Modul = " + String.format("%.2f",getfB().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfB().getArgument())), L2Values);
-		dataset.addSeries("Faza C. Modul = " + String.format("%.2f",getfC().abs()) + ". Arg = " + String.format("%.2f",FastMath.toDegrees(getfC().getArgument())), L3Values);
+		dataset.addSeries(
+				"Faza A. Modul = "
+						+ String.format("%.2f", getfA().abs())
+						+ ". Arg = "
+						+ String.format("%.2f",
+								FastMath.toDegrees(getfA().getArgument())),
+				L1Values);
+		dataset.addSeries(
+				"Faza B. Modul = "
+						+ String.format("%.2f", getfB().abs())
+						+ ". Arg = "
+						+ String.format("%.2f",
+								FastMath.toDegrees(getfB().getArgument())),
+				L2Values);
+		dataset.addSeries(
+				"Faza C. Modul = "
+						+ String.format("%.2f", getfC().abs())
+						+ ". Arg = "
+						+ String.format("%.2f",
+								FastMath.toDegrees(getfC().getArgument())),
+				L3Values);
 		return dataset;
 	}
-	
+
 	public static double[] increment(double begin, double pitch, double end) {
 		double[] array = new double[(int) ((end - begin) / pitch)];
 		for (int i = 0; i < array.length; i++) {
@@ -65,7 +83,7 @@ public class XYChart extends VectorChart{
 		}
 		return array;
 	}
-	
+
 	public ChartPanel createChart() {
 		DefaultXYDataset dataset = createXYDataset();
 

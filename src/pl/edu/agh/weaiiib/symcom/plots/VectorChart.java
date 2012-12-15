@@ -1,4 +1,4 @@
-package pl.edu.agh.weaiiib.symcom.logic;
+package pl.edu.agh.weaiiib.symcom.plots;
 
 import java.awt.Color;
 
