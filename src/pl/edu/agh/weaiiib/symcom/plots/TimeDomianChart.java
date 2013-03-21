@@ -12,68 +12,42 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.xy.DefaultXYDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
-public class TimeDomianChart extends VectorChart {
-
+public class TimeDomianChart extends ComplexChart {
+	
+	protected final static String TITLE = "Time plots of phases A, B, C";
+	
 	public TimeDomianChart(Complex fA, Complex fB, Complex fC) {
 		super(fA, fB, fC);
+		setChartPanel(createChart());
+		getChartPanel().setMouseWheelEnabled(true);
 	}
 
 	private static final double FREQ = 50;
 	private static final double[] LAxis = increment(0.0, 0.0001, 0.03);
 
-	public DefaultXYDataset createXYDataset() {
-		DefaultXYDataset dataset = new DefaultXYDataset();
+	public XYDataset createXYDataset() {
 
-		double[][] L1Values = new double[2][LAxis.length];
-		double[][] L2Values = new double[2][LAxis.length];
-		double[][] L3Values = new double[2][LAxis.length];
-
-		L1Values[0] = L2Values[0] = L3Values[0] = LAxis;
-
+		final XYSeriesCollection collection = new XYSeriesCollection();
+		
+		final XYSeries seriesA = new XYSeries("Faza A. Modul = " + String.format("%.2f", getfA().abs()) + ". Arg = " + String.format("%.2f", FastMath.toDegrees(getfA().getArgument())));
+		final XYSeries seriesB = new XYSeries("Faza B. Modul = " + String.format("%.2f", getfB().abs()) + ". Arg = " + String.format("%.2f", FastMath.toDegrees(getfB().getArgument())));
+		final XYSeries seriesC = new XYSeries("Faza C. Modul = " + String.format("%.2f", getfC().abs()) + ". Arg = " + String.format("%.2f", FastMath.toDegrees(getfC().getArgument())));
+		
 		for (int i = 0; i < LAxis.length; i++) {
 
-			L1Values[1][i] = getfA().abs()
-					* sin(L1Values[0][i] * 2 * PI * FREQ
-							+ getfA().getArgument());
-			L2Values[1][i] = getfB().abs()
-					* sin(L1Values[0][i] * 2 * PI * FREQ
-							+ getfB().getArgument());
-			L3Values[1][i] = getfC().abs()
-					* sin(L1Values[0][i] * 2 * PI * FREQ
-							+ getfC().getArgument());
-
-			logger.debug("XY Data Set F1" + L1Values[0][i] + " "
-					+ L1Values[1][i]);
-			logger.debug("XY Data Set F1" + L2Values[0][i] + " "
-					+ L2Values[1][i]);
-			logger.debug("XY Data Set F1" + L3Values[0][i] + " "
-					+ L3Values[1][i]);
+			seriesA.add(LAxis[i], getfA().abs()* sin(LAxis[i] * 2 * PI * FREQ+ getfA().getArgument()));
+			seriesB.add(LAxis[i], getfB().abs()* sin(LAxis[i] * 2 * PI * FREQ+ getfB().getArgument()));
+			seriesC.add(LAxis[i], getfC().abs()* sin(LAxis[i] * 2 * PI * FREQ+ getfC().getArgument()));
 		}
 
-		dataset.addSeries(
-				"Faza A. Modul = "
-						+ String.format("%.2f", getfA().abs())
-						+ ". Arg = "
-						+ String.format("%.2f",
-								FastMath.toDegrees(getfA().getArgument())),
-				L1Values);
-		dataset.addSeries(
-				"Faza B. Modul = "
-						+ String.format("%.2f", getfB().abs())
-						+ ". Arg = "
-						+ String.format("%.2f",
-								FastMath.toDegrees(getfB().getArgument())),
-				L2Values);
-		dataset.addSeries(
-				"Faza C. Modul = "
-						+ String.format("%.2f", getfC().abs())
-						+ ". Arg = "
-						+ String.format("%.2f",
-								FastMath.toDegrees(getfC().getArgument())),
-				L3Values);
-		return dataset;
+		collection.addSeries(seriesA);
+		collection.addSeries(seriesB);
+		collection.addSeries(seriesC);
+		return collection;
 	}
 
 	public static double[] increment(double begin, double pitch, double end) {
@@ -85,7 +59,7 @@ public class TimeDomianChart extends VectorChart {
 	}
 
 	public ChartPanel createChart() {
-		DefaultXYDataset dataset = createXYDataset();
+		XYDataset dataset = createXYDataset();
 
 		// Create the chart
 		JFreeChart chart = ChartFactory.createXYLineChart(TITLE, // The chart

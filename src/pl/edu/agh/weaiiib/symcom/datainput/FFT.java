@@ -23,10 +23,6 @@ public class FFT {
 	private Complex[] fft_A;
 	private Complex[] fft_B;
 	private Complex[] fft_C;
-	
-	private Complex[] ifft_A;
-	private Complex[] ifft_B;
-	private Complex[] ifft_C;
 
 	public FFT(SampledData sampledData_){
 		sampledData = sampledData_;

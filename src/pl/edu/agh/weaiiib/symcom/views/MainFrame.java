@@ -38,7 +38,9 @@ import pl.edu.agh.weaiiib.symcom.datainput.FFT;
 import pl.edu.agh.weaiiib.symcom.datainput.SampledData;
 import pl.edu.agh.weaiiib.symcom.logic.Main;
 import pl.edu.agh.weaiiib.symcom.logic.SymmetricalComponents;
+import pl.edu.agh.weaiiib.symcom.plots.ComplexChart;
 import pl.edu.agh.weaiiib.symcom.plots.HistogramChart;
+import pl.edu.agh.weaiiib.symcom.plots.TimeDomainDataChart;
 import pl.edu.agh.weaiiib.symcom.plots.TimeDomianChart;
 import pl.edu.agh.weaiiib.symcom.plots.VectorChart;
 
@@ -67,6 +69,7 @@ public class MainFrame extends JFrame {
 	private ChartFrame histogramFrameA;
 	private ChartFrame histogramFrameB;
 	private ChartFrame histogramFrameC;
+	private ChartFrame timeDomianDataFile;
 	private File dataFile;
 
 	/**
@@ -108,6 +111,7 @@ public class MainFrame extends JFrame {
 		histogramFrameA = new ChartFrame("FFT results phase A", 100, 800);
 		histogramFrameB = new ChartFrame("FFT results phase B", 500, 800);
 		histogramFrameC = new ChartFrame("FFT results phase C", 900, 800);
+		timeDomianDataFile = new ChartFrame("Time Domain Data File", 900, 400);
 		
 		setTitle("Skladowe Symetryczne - Dariusz Piechota");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -540,7 +544,7 @@ public class MainFrame extends JFrame {
 		
 	}
 
-	private void refreshJFrame(JFrame frame, VectorChart chart) {
+	private void refreshJFrame(JFrame frame, ComplexChart chart) {
 
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(chart.getChartPanel(), BorderLayout.CENTER);
@@ -557,6 +561,8 @@ public class MainFrame extends JFrame {
 		frame.repaint();
 		frame.setVisible(true);
 	}
+	
+	
 	private void updatePhaseValues() {
 		logger.debug("Button Click event");
 
@@ -581,12 +587,18 @@ public class MainFrame extends JFrame {
 		 * Print histogram
 		 */
 		FFT fft = new FFT(sampledData);
-		HistogramChart histogramA = new HistogramChart(fft.getFft_A(),sampledData.getSamplingFreq(), "Phase A");
-		HistogramChart histogramB = new HistogramChart(fft.getFft_B(),sampledData.getSamplingFreq(), "Phase B");
-		HistogramChart histogramC = new HistogramChart(fft.getFft_C(),sampledData.getSamplingFreq(), "Phase C");
+		HistogramChart histogramA = new HistogramChart(fft.getFft_A(),sampledData.getSamplingFreq(), "Phase A", "RED");
+		HistogramChart histogramB = new HistogramChart(fft.getFft_B(),sampledData.getSamplingFreq(), "Phase B", "BLUE");
+		HistogramChart histogramC = new HistogramChart(fft.getFft_C(),sampledData.getSamplingFreq(), "Phase C", "GREEN");
+		
 		refreshJFrame(histogramFrameA, histogramA);
 		refreshJFrame(histogramFrameB, histogramB);
 		refreshJFrame(histogramFrameC, histogramC);
+		
+		//new Complex are fakes 
+		TimeDomainDataChart timeDomainDataChart = new TimeDomainDataChart(sampledData, new Complex(0,0), new Complex(0,0), new Complex(0,0));
+		refreshJFrame(timeDomianDataFile, timeDomainDataChart);
+		
 	}
 	public File getDataFile() {
 		return dataFile;
