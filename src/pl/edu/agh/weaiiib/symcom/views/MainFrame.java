@@ -59,6 +59,7 @@ public class MainFrame extends JFrame {
 	private JSpinner angelF2;
 	private JSpinner magnitudeF3;
 	private JSpinner angelF3;
+	private JSpinner frequency_lbl;
 
 	private ChartFrame timeProcess;
 	private ChartFrame threePhaze;
@@ -102,25 +103,25 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/pl/edu/agh/weaiiib/symcom/resources/lightning-icon.png")));
 
-		timeProcess = new ChartFrame("Przebieg czasowy faz A, B, C", 100, 0);
-		threePhaze = new ChartFrame("Fazory faz A, B, C", 500, 0);
-		zero_seq = new ChartFrame("Kolejnosc zerowa", 100, 400);
-		positiveSequence = new ChartFrame("Kolejnosc zgodna", 500, 400);
-		negativeSequence = new ChartFrame("Kolejnosc przeciwna", 900, 400);
-		threePhazeCheck = new ChartFrame("Sprawdzenie", 900, 0);
+		timeProcess = new ChartFrame("Time domain graph of A, B, C phases", 100, 0);
+		threePhaze = new ChartFrame("Phasors of A, B, C phases", 500, 0);
+		zero_seq = new ChartFrame("Zero sequence", 100, 400);
+		positiveSequence = new ChartFrame("Positive sequence", 500, 400);
+		negativeSequence = new ChartFrame("Negative sequence", 900, 400);
+		threePhazeCheck = new ChartFrame("Sum of phasors - check", 900, 0);
 		histogramFrameA = new ChartFrame("FFT results phase A", 100, 800);
 		histogramFrameB = new ChartFrame("FFT results phase B", 500, 800);
 		histogramFrameC = new ChartFrame("FFT results phase C", 900, 800);
 		timeDomianDataFile = new ChartFrame("Time Domain Data File", 900, 400);
 		
-		setTitle("Skladowe Symetryczne - Dariusz Piechota");
+		setTitle("Symmetrical components - AGH");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 604, 253);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		JMenu mnPlik = new JMenu("Plik");
+		JMenu mnPlik = new JMenu("File");
 		menuBar.add(mnPlik);
 
 		JMenuItem mntmExit = new JMenuItem("Exit");
@@ -141,7 +142,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane
 						.showMessageDialog(contentPane,
-								"Dariusz Piechota. Praca magisterska: Symmetrical Components in proactive relays for power systems");
+								"Dariusz Piechota. Praca magisterska: Symmetrical Components in proactive relays for power systems.");
 			}
 		});
 		mnAbout.add(mntmAboutThisProgram);
@@ -166,14 +167,14 @@ public class MainFrame extends JFrame {
 		);
 		
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("Simulation", null, panel, null);
+		tabbedPane.addTab("Graphs", null, panel, null);
 		
 				JPanel panel_1 = new JPanel();
 				panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Phase A", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 				
-						JLabel lblAmplituda = new JLabel("Amplituda");
+						JLabel lblAmplituda = new JLabel("Magnitude");
 						
-								JLabel lblFazastopnie = new JLabel("Faza (stopnie)");
+								JLabel lblFazastopnie = new JLabel("Phase (degrees)");
 								
 										magnitudeF1 = new JSpinner();
 										magnitudeF1.setModel(new SpinnerNumberModel(new Double(100),
@@ -241,9 +242,9 @@ public class MainFrame extends JFrame {
 				JPanel panel_2 = new JPanel();
 				panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Phase B", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 				
-						JLabel label = new JLabel("Amplituda");
+						JLabel lblMagnitude = new JLabel("Magnitude");
 						
-								JLabel label_2 = new JLabel("Faza (stopnie)");
+								JLabel lblPhasedegrees = new JLabel("Phase (degrees)");
 								
 										magnitudeF2 = new JSpinner();
 										magnitudeF2.setModel(new SpinnerNumberModel(new Double(50), new Double(
@@ -264,9 +265,9 @@ public class MainFrame extends JFrame {
 																						gl_panel_2
 																								.createParallelGroup(
 																										Alignment.LEADING)
-																								.addComponent(label)
+																								.addComponent(lblMagnitude)
 																								.addComponent(
-																										label_2,
+																										lblPhasedegrees,
 																										GroupLayout.DEFAULT_SIZE,
 																										79,
 																										Short.MAX_VALUE))
@@ -298,7 +299,7 @@ public class MainFrame extends JFrame {
 																						gl_panel_2
 																								.createParallelGroup(
 																										Alignment.BASELINE)
-																								.addComponent(label)
+																								.addComponent(lblMagnitude)
 																								.addComponent(
 																										magnitudeF2,
 																										GroupLayout.PREFERRED_SIZE,
@@ -310,7 +311,7 @@ public class MainFrame extends JFrame {
 																						gl_panel_2
 																								.createParallelGroup(
 																										Alignment.BASELINE)
-																								.addComponent(label_2)
+																								.addComponent(lblPhasedegrees)
 																								.addComponent(
 																										angelF2,
 																										GroupLayout.PREFERRED_SIZE,
@@ -322,9 +323,9 @@ public class MainFrame extends JFrame {
 				JPanel panel_3 = new JPanel();
 				panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Phase C", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 				
-						JLabel label_1 = new JLabel("Amplituda");
+						JLabel lblMagnitude_1 = new JLabel("Magnitude");
 						
-								JLabel label_3 = new JLabel("Faza (stopnie)");
+								JLabel lblPhasedegrees_1 = new JLabel("Phase (degrees)");
 								
 										magnitudeF3 = new JSpinner();
 										magnitudeF3.setModel(new SpinnerNumberModel(new Double(100),
@@ -343,12 +344,12 @@ public class MainFrame extends JFrame {
 																		gl_panel_3
 																				.createParallelGroup(Alignment.LEADING,
 																						false)
-																				.addComponent(label_3,
+																				.addComponent(lblPhasedegrees_1,
 																						Alignment.TRAILING,
 																						GroupLayout.DEFAULT_SIZE,
 																						GroupLayout.DEFAULT_SIZE,
 																						Short.MAX_VALUE)
-																				.addComponent(label_1,
+																				.addComponent(lblMagnitude_1,
 																						Alignment.TRAILING,
 																						GroupLayout.DEFAULT_SIZE, 86,
 																						Short.MAX_VALUE))
@@ -374,7 +375,7 @@ public class MainFrame extends JFrame {
 																						gl_panel_3
 																								.createParallelGroup(
 																										Alignment.BASELINE)
-																								.addComponent(label_1)
+																								.addComponent(lblMagnitude_1)
 																								.addComponent(
 																										magnitudeF3,
 																										GroupLayout.PREFERRED_SIZE,
@@ -386,7 +387,7 @@ public class MainFrame extends JFrame {
 																						gl_panel_3
 																								.createParallelGroup(
 																										Alignment.BASELINE)
-																								.addComponent(label_3)
+																								.addComponent(lblPhasedegrees_1)
 																								.addComponent(
 																										angelF3,
 																										GroupLayout.PREFERRED_SIZE,
@@ -395,7 +396,7 @@ public class MainFrame extends JFrame {
 																				.addContainerGap(67, Short.MAX_VALUE)));
 												panel_3.setLayout(gl_panel_3);
 		
-				JButton btnRysuj = new JButton("Draw plots");
+				JButton btnRysuj = new JButton("Draw graphs");
 				btnRysuj.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent arg0) {
@@ -403,6 +404,11 @@ public class MainFrame extends JFrame {
 					}
 
 				});
+		
+		frequency_lbl = new JSpinner();
+		frequency_lbl.setModel(new SpinnerNumberModel(new Double(50), null, null, new Double(1)));
+		
+		JLabel lblFrequency = new JLabel("Frequency [Hz]");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -415,7 +421,13 @@ public class MainFrame extends JFrame {
 							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
 							.addGap(6)
 							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnRysuj, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(10)
+							.addComponent(lblFrequency)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(frequency_lbl, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnRysuj, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(7, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
@@ -430,8 +442,11 @@ public class MainFrame extends JFrame {
 								.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnRysuj)
-					.addContainerGap(13, Short.MAX_VALUE))
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblFrequency)
+						.addComponent(frequency_lbl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnRysuj))
+					.addContainerGap(12, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		
@@ -497,17 +512,17 @@ public class MainFrame extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 
-	private void doPrintButton(Complex fA, Complex fB, Complex fC) {
+	private void doPrintButton(Complex fA, Complex fB, Complex fC, Double frequency) {
 		/*
 		 * Print time-functions of phases
 		 */
-		TimeDomianChart xychart = new TimeDomianChart(fA, fB, fC);
+		TimeDomianChart xychart = new TimeDomianChart(fA, fB, fC, frequency);
 		refreshJFrame(timeProcess, xychart);
 
 		/*
 		 * Print original 3-phase system
 		 */
-		VectorChart vector = new VectorChart(fA, fB, fC);
+		VectorChart vector = new VectorChart(fA, fB, fC, frequency);
 		refreshJFrame(threePhaze, vector);
 
 		/*
@@ -518,19 +533,19 @@ public class MainFrame extends JFrame {
 		/*
 		 * Print zero sequence phasers
 		 */
-		VectorChart vectorABC_0 = new VectorChart(symcom.getfA_0(), symcom.getfB_0(), symcom.getfC_0());
+		VectorChart vectorABC_0 = new VectorChart(symcom.getfA_0(), symcom.getfB_0(), symcom.getfC_0(), frequency);
 		refreshJFrame(zero_seq, vectorABC_0);
 
 		/*
 		 * Print positive sequence phasers
 		 */
-		VectorChart vectorABC_1 = new VectorChart(symcom.getfA_1(), symcom.getfB_1(), symcom.getfC_1());
+		VectorChart vectorABC_1 = new VectorChart(symcom.getfA_1(), symcom.getfB_1(), symcom.getfC_1(), frequency);
 		refreshJFrame(positiveSequence, vectorABC_1);
 
 		/*
 		 * Print negative sequence phasers
 		 */
-		VectorChart vectorABC_2 = new VectorChart(symcom.getfA_2(), symcom.getfB_2(), symcom.getfC_2());
+		VectorChart vectorABC_2 = new VectorChart(symcom.getfA_2(), symcom.getfB_2(), symcom.getfC_2(), frequency);
 		refreshJFrame(negativeSequence, vectorABC_2);
 
 		/*
@@ -539,7 +554,7 @@ public class MainFrame extends JFrame {
 		VectorChart vectorABC_check = new VectorChart(
 				((symcom.getfA_0().add(symcom.getfA_1())).add(symcom.getfA_2())),
 				((symcom.getfB_0().add(symcom.getfB_1())).add(symcom.getfB_2())),
-				((symcom.getfC_0().add(symcom.getfC_1())).add(symcom.getfC_2())));
+				((symcom.getfC_0().add(symcom.getfC_1())).add(symcom.getfC_2())), frequency);
 		refreshJFrame(threePhazeCheck, vectorABC_check);
 		
 	}
@@ -565,7 +580,9 @@ public class MainFrame extends JFrame {
 	
 	private void updatePhaseValues() {
 		logger.debug("Button Click event");
-
+		
+		Double frequency = Double.valueOf(frequency_lbl.getValue().toString());
+		
 		Complex FA = ComplexUtils.polar2Complex(Double.valueOf(magnitudeF1
 				.getValue().toString()), FastMath.toRadians(Double
 				.valueOf(angelF1.getValue().toString())));
@@ -578,7 +595,7 @@ public class MainFrame extends JFrame {
 		
 		logger.info("\nPhase values: \nfA = " + FA + "\nfB = " + FB + "\nfC = " + FC);
 		
-		doPrintButton(FA, FB, FC);
+		doPrintButton(FA, FB, FC, frequency);
 	}
 	
 	private void actionOnButtonDrawDataFile() throws IOException{
@@ -587,6 +604,10 @@ public class MainFrame extends JFrame {
 		 * Print histogram
 		 */
 		FFT fft = new FFT(sampledData);
+		
+		Complex[] phases = fft.getPhases();
+		fft.show(phases, "Phases from FFT");
+		
 		HistogramChart histogramA = new HistogramChart(fft.getFft_A(),sampledData.getSamplingFreq(), "Phase A", "RED");
 		HistogramChart histogramB = new HistogramChart(fft.getFft_B(),sampledData.getSamplingFreq(), "Phase B", "BLUE");
 		HistogramChart histogramC = new HistogramChart(fft.getFft_C(),sampledData.getSamplingFreq(), "Phase C", "GREEN");
@@ -596,8 +617,9 @@ public class MainFrame extends JFrame {
 		refreshJFrame(histogramFrameC, histogramC);
 		
 		//new Complex are fakes 
-		TimeDomainDataChart timeDomainDataChart = new TimeDomainDataChart(sampledData, new Complex(0,0), new Complex(0,0), new Complex(0,0));
+		TimeDomainDataChart timeDomainDataChart = new TimeDomainDataChart(sampledData, new Complex(0,0), new Complex(0,0), new Complex(0,0), fft.Freq);
 		refreshJFrame(timeDomianDataFile, timeDomainDataChart);
+		doPrintButton(phases[0], phases[1], phases[2], fft.Freq);
 		
 	}
 	public File getDataFile() {

@@ -23,7 +23,7 @@ public class HistogramChart {
 	private Double samplingFreq;
 	private String LEGENDTITLE = "";
 	private ChartPanel chartPanel;
-	private static final String TITLE = "Single-Sided Amplitude Spectrum of y(t)";
+	private static final String TITLE = "Single-Sided Magnitude Spectrum of y(t)";
 	private String Colour = "RED";
 
 	/**

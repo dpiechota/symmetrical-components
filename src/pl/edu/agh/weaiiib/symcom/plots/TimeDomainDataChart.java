@@ -20,8 +20,8 @@ public class TimeDomainDataChart extends ComplexChart{
 	protected final static String TITLE = "Time Domain Plot";
 
 	
-	public TimeDomainDataChart(SampledData sampleddata,Complex fA, Complex fB, Complex fC) {
-		super(fA, fB, fC);
+	public TimeDomainDataChart(SampledData sampleddata,Complex fA, Complex fB, Complex fC, Double frequency) {
+		super(fA, fB, fC, frequency);
 		sampledData = sampleddata;
 		setChartPanel(createChart());
 		getChartPanel().setMouseWheelEnabled(true);
@@ -54,8 +54,8 @@ public class TimeDomainDataChart extends ComplexChart{
 		// Create the chart
 		JFreeChart chart = ChartFactory.createXYLineChart(TITLE, // The chart
 																	// title
-				"Czas [s]", // x axis label
-				"Amplituda", // y axis label
+				"Time [s]", // x axis label
+				"Amplitude", // y axis label
 				dataset, // The dataset for the chart
 				PlotOrientation.VERTICAL, true, // Is a legend required?
 				false, // Use tooltips

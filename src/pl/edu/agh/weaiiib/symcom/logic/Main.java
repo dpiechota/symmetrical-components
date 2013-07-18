@@ -18,6 +18,7 @@ public class Main {
 	/**
 	 * @param args
 	 */
+	/***
 	public static void main(String[] args) throws IOException,
 			InterruptedException {
 		DOMConfigurator.configure("log4j.xml");
@@ -74,4 +75,5 @@ public class Main {
 		vectorchartjframe_spr.setVisible(true);
 
 	}
+	*///
 }

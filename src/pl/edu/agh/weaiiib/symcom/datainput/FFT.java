@@ -16,19 +16,25 @@ package pl.edu.agh.weaiiib.symcom.datainput;
  *************************************************************************
  */
 import org.apache.commons.math3.complex.Complex;
+import org.apache.log4j.Logger;
 
 public class FFT {
-	
 	private SampledData sampledData;
 	private Complex[] fft_A;
 	private Complex[] fft_B;
 	private Complex[] fft_C;
+	public Double Freq;
 
 	public FFT(SampledData sampledData_){
 		sampledData = sampledData_;
 		setFft_A(fft(sampledData.getPhase_A_samples().toArray(new Complex[sampledData.getPhase_A_samples().size()])));
 		setFft_B(fft(sampledData.getPhase_B_samples().toArray(new Complex[sampledData.getPhase_B_samples().size()])));
 		setFft_C(fft(sampledData.getPhase_C_samples().toArray(new Complex[sampledData.getPhase_C_samples().size()])));
+	}
+	
+	public void printFFT(){
+		for (Complex i : this.fft_A)
+		    System.out.println(i);
 	}
 	// compute the FFT of x[], assuming its length is a power of 2
 	public static Complex[] fft(Complex[] x) {
@@ -147,8 +153,32 @@ public class FFT {
 		}
 		System.out.println();
 	}
-
-	public Complex[] compute(Integer N) {
+	
+	public Complex findMax(Complex[] y){
+		Integer N = y.length;
+		Integer nth = 0;
+		Double max = 0.0;
+		for (int i = 0; i < N/2; i++) {
+			if (i > 0 && (y[i].abs() > y[nth].abs())){
+				nth = i;
+				max = y[i].abs();
+				System.out.println("Max abs = " + max + " ; " + "Probka = " + nth);
+				System.out.println("Re = " + y[nth].getReal() + " ; " + "IM = " + y[nth].getImaginary() + " Freq. = " + (nth * sampledData.getSamplingFreq()) / y.length);
+				this.Freq = (nth * sampledData.getSamplingFreq()) / y.length;
+			}
+		}
+		return y[nth];		
+	}
+	
+	public Complex[] getPhases(){
+		Complex[] FABC = new Complex[3];
+		FABC[0] = findMax(this.fft_A);
+		FABC[1] = findMax(this.fft_B);
+		FABC[2] = findMax(this.fft_C);
+		return FABC;
+	}
+	
+	public Complex compute(Integer N) {
 		Complex[] x = new Complex[N];
 
 		Double Fs = 1000.0; // Sampling frequency
@@ -167,7 +197,7 @@ public class FFT {
 		// show(y, "y = fft(x)");
 		
 		Double max = 0.0;
-		Integer nth = 1;
+		Integer nth = 0;
 		
 		for (int i = 0; i < N/2; i++) {
 			if (i > 0 && y[i].abs() > y[i-1].abs()){
@@ -176,7 +206,7 @@ public class FFT {
 				//System.out.println("Max abs = " + max + " ; " + "Probka = " + nth);
 			}
 		}
-		return y;
+		return y[nth];
 		
 		/*
 		// take inverse FFT

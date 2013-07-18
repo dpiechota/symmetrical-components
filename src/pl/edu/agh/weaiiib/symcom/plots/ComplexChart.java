@@ -12,12 +12,14 @@ public abstract class ComplexChart {
 	private Complex fA;
 	private Complex fB;
 	private Complex fC;
+	private Double frequency;
 	
-	public ComplexChart(Complex fA, Complex fB, Complex fC) {
+	public ComplexChart(Complex fA, Complex fB, Complex fC, Double frequency) {
 		// DOMConfigurator.configure("log4j.xml");
 		setfA(fA);
 		setfB(fB);
 		setfC(fC);
+		setFrequency(frequency);
 	}
 	
 	public Complex getfA() {
@@ -50,5 +52,13 @@ public abstract class ComplexChart {
 
 	public void setChartPanel(ChartPanel chartPanel) {
 		this.chartPanel = chartPanel;
+	}
+
+	public Double getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(Double frequency) {
+		this.frequency = frequency;
 	}
 }

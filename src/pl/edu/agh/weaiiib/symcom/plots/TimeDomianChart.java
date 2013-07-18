@@ -20,22 +20,22 @@ public class TimeDomianChart extends ComplexChart {
 	
 	protected final static String TITLE = "Time plots of phases A, B, C";
 	
-	public TimeDomianChart(Complex fA, Complex fB, Complex fC) {
-		super(fA, fB, fC);
+	public TimeDomianChart(Complex fA, Complex fB, Complex fC, Double frequency) {
+		super(fA, fB, fC, frequency);
 		setChartPanel(createChart());
 		getChartPanel().setMouseWheelEnabled(true);
 	}
 
-	private static final double FREQ = 50;
+	private double FREQ = getFrequency();
 	private static final double[] LAxis = increment(0.0, 0.0001, 0.03);
 
 	public XYDataset createXYDataset() {
 
 		final XYSeriesCollection collection = new XYSeriesCollection();
 		
-		final XYSeries seriesA = new XYSeries("Faza A. Modul = " + String.format("%.2f", getfA().abs()) + ". Arg = " + String.format("%.2f", FastMath.toDegrees(getfA().getArgument())));
-		final XYSeries seriesB = new XYSeries("Faza B. Modul = " + String.format("%.2f", getfB().abs()) + ". Arg = " + String.format("%.2f", FastMath.toDegrees(getfB().getArgument())));
-		final XYSeries seriesC = new XYSeries("Faza C. Modul = " + String.format("%.2f", getfC().abs()) + ". Arg = " + String.format("%.2f", FastMath.toDegrees(getfC().getArgument())));
+		final XYSeries seriesA = new XYSeries("Phase A. Magnitude = " + String.format("%.2f", getfA().abs()) + ". Arg = " + String.format("%.2f", FastMath.toDegrees(getfA().getArgument())));
+		final XYSeries seriesB = new XYSeries("Phase B. Magnitude = " + String.format("%.2f", getfB().abs()) + ". Arg = " + String.format("%.2f", FastMath.toDegrees(getfB().getArgument())));
+		final XYSeries seriesC = new XYSeries("Phase C. Magnitude = " + String.format("%.2f", getfC().abs()) + ". Arg = " + String.format("%.2f", FastMath.toDegrees(getfC().getArgument())));
 		
 		for (int i = 0; i < LAxis.length; i++) {
 
@@ -64,8 +64,8 @@ public class TimeDomianChart extends ComplexChart {
 		// Create the chart
 		JFreeChart chart = ChartFactory.createXYLineChart(TITLE, // The chart
 																	// title
-				"Czas [s]", // x axis label
-				"Amplituda", // y axis label
+				"Time [s]", // x axis label
+				"Magnitude", // y axis label
 				dataset, // The dataset for the chart
 				PlotOrientation.VERTICAL, true, // Is a legend required?
 				false, // Use tooltips

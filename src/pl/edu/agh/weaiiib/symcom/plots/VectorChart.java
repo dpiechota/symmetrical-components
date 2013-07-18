@@ -18,8 +18,8 @@ public class VectorChart extends ComplexChart {
 	 */
 	protected final static String TITLE = "Phasors of A, B, C phases";
 	
-	public VectorChart(Complex fA, Complex fB, Complex fC) {
-		super(fA, fB, fC);
+	public VectorChart(Complex fA, Complex fB, Complex fC, Double frequency) {
+		super(fA, fB, fC, frequency);
 		setChartPanel(createChart());
 		getChartPanel().setMouseWheelEnabled(true);
 	}

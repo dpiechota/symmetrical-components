@@ -77,7 +77,7 @@ public class SampledData {
 				getPhase_B_samples().add(new Complex(Double.parseDouble(split[2]), 0));
 				getPhase_C_samples().add(new Complex(Double.parseDouble(split[3]), 0));
 				counter = counter + 1;
-				logger.debug("Samples : " + split + ". Counter = " + counter);
+				//logger.debug("Samples : " + split + ". Counter = " + counter);
 			}
 		} catch (FileNotFoundException ex) {
 			System.err.println("Missing file " + getDataFile().getAbsolutePath());
